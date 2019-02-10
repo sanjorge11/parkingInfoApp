@@ -3,7 +3,14 @@ package com.example.parkinginfoapp;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.Fragment;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.MapFragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +43,12 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
     private OnFragmentInteractionListener mListener;
 
-    private GoogleMap mMap;
+//    private GoogleMap mMap;
+//    MapView mMapView;
+      private GoogleMap mGoogleMap;
+      MapView mMapView;
+      View mView;
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -68,15 +80,31 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getFragmentManager()
-                .findFragmentById(R.id.map);
+
 //        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
 //                .findFragmentById(R.id.map);
 
-        System.out.println("This is the map fragment");
-        System.out.println(mapFragment);
+        //System.out.println("This is the map fragment");
+       // System.out.println(mapFragment);
+        //System.out.println();
 
         //mapFragment.getMapAsync(this);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mMapView = (MapView) view.findViewById(R.id.map);
+
+        System.out.println("This is the map fragment");
+        System.out.println(mMapView);
+
+        if(mMapView != null) {
+            mMapView.onCreate(null);
+            mMapView.onResume();;
+            mMapView.getMapAsync(this);
+        }
     }
 
     @Override
@@ -128,12 +156,24 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
+
+//        MapsInitializer.initialize(getContext());
+//        mGoogleMap = googleMap;
+
+        mGoogleMap = googleMap;
+
+        // Add a marker in Sydney and move the camera
+        LatLng sydney = new LatLng(-34, 151);
+        mGoogleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+
+        /*mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney)); */
 
     }
 }
