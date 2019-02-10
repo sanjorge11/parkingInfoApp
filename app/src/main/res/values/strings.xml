@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">parkingInfoApp</string>
+    <string name="app_name">UNC Transportation</string>
     <string name="title_home">Home</string>
     <string name="title_listView">List View</string>
     <string name="title_profile">Profile</string>
