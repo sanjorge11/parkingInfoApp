@@ -6,19 +6,99 @@
     tools:context=".ProfileFragment">
 
     <!-- TODO: Update blank fragment layout -->
+
+
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:text="Name:"
+        android:layout_width="75dp"
+        android:layout_marginLeft="10dp"
+        android:textSize="60px"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:textStyle="bold"
+        android:gravity="center"/>
 
     <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="type your name here"
-        android:id="@+id/edit_text"
-        android:layout_marginTop="10dp"
-        android:inputType="textPersonName|textCapWords"/>
+        android:id="@+id/name"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="50dp"
+        android:hint="Type Name Here"
+        android:inputType="textPersonName|textCapWords" />
 
+    <TextView
+        android:text="I am a:"
+        android:layout_width="75dp"
+        android:layout_marginLeft="10dp"
+        android:textSize="60px"
+        android:layout_height="50dp"
+        android:layout_marginTop="150dp"
+        android:textStyle="bold"
+        android:gravity="center"/>
+
+    <EditText
+        android:id="@+id/options"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="150dp"
+        android:hint="Select"
+        android:inputType="text|textCapWords" />
+
+    <TextView
+        android:text="Permit:"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="250dp"
+        android:textSize="60px"
+        android:textStyle="bold"
+        android:gravity="center"/>
+
+    <EditText
+        android:id="@+id/permits"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="250dp"
+        android:hint="Permit Type"
+        android:inputType="text|textCapWords" />
+
+    <TextView
+        android:text="Push Notifications:"
+        android:layout_width="150dp"
+        android:layout_height="70dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="350dp"
+        android:textSize="45px"
+        android:textStyle="bold"
+        android:gravity="center"/>
+
+    <EditText
+        android:id="@+id/pushNotifications"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="165dp"
+        android:layout_marginTop="350dp"
+        android:hint=""
+        android:inputType="text|textCapWords" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_marginTop="450dp"
+        android:layout_marginLeft="90dp"
+        android:text="Save Changes" />
+    <!--<Spinner-->
+        <!--android:id="@+id/spinnerProfile"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_width="200dp"-->
+        <!--android:layout_marginLeft="180dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:entries="@array/profileOptions"-->
+        <!--android:layout_marginTop="200dp"/>-->
 
 
 </FrameLayout>

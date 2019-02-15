@@ -7,6 +7,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 
 /**
@@ -17,7 +21,7 @@ import android.view.ViewGroup;
  * Use the {@link ProfileFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements AdapterView.OnItemSelectedListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -28,6 +32,7 @@ public class ProfileFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private Spinner SpinnerProfile;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -58,6 +63,16 @@ public class ProfileFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+//        SpinnerProfile = (Spinner) findViewById(R.id.spinnerProfile);
+//        SpinnerProfile.setOnItemSelectedListener(this);
+
+//        Spinner spinner = (Spinner) findViewById(R.id.spinnerProfile);
+//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context:this, R.array.options, andorid.R.layout.simple_spinner_item);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spinner.setAdapter(adapter);
+//        spinner.setOnItemSelectedListener(this);
+
     }
 
     @Override
@@ -65,6 +80,9 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile, container, false);
+
+//       SpinnerProfile = (Spinner) getView().findViewById(R.id.SpinnerProfile);
+//       SpinnerProfile.setOnItemSelectedListener(this);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -91,6 +109,23 @@ public class ProfileFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View arg1, int pos,
+                               long arg3) {
+//        parent.getItemAtPosition(pos);
+//        if (pos == 0) {
+//            ArrayAdapter<CharSequence> adapter = (ArrayAdapter<CharSequence>) ArrayAdapter
+//                    .createFromResource(this, R.array.profileOptions,
+//                            android.R.layout.simple_spinner_item);
+//            SpinnerProfile.setAdapter(adapter);
+//        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -105,4 +140,6 @@ public class ProfileFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
 }
