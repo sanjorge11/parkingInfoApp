@@ -15,4 +15,18 @@
         android:name="com.example.parkinginfoapp.ListFragment"
         android:label="fragment_item_list"
         tools:layout="@layout/fragment_item_list" />
+
+    <fragment
+        android:id="@+id/profile_dest"
+        android:name="com.example.parkinginfoapp.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+
+
+    <fragment
+        android:id="@+id/moreinfo_dest"
+        android:name="com.example.parkinginfoapp.MoreInfoFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+
 </navigation>

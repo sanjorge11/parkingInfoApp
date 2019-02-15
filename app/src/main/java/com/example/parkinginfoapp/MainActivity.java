@@ -16,7 +16,8 @@ import com.example.parkinginfoapp.dummy.DummyContent;
 import androidx.navigation.Navigation;
 
 public class MainActivity extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener,
-        ListFragment.OnListFragmentInteractionListener {
+        ListFragment.OnListFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener,
+        MoreInfoFragment.OnFragmentInteractionListener {
 
     private TextView mTextMessage;
 
@@ -36,8 +37,10 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
                     Navigation.findNavController(navHost_View).navigate(R.id.list_dest);
                     return true;
                 case R.id.navigation_profile:
+                    Navigation.findNavController(navHost_View).navigate(R.id.profile_dest);
                     return true;
-                case R.id.navigation_notifications:
+                case R.id.navigation_moreInfo:
+                    Navigation.findNavController(navHost_View).navigate(R.id.moreinfo_dest);
                     return true;
             }
 
