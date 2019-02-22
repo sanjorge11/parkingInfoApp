@@ -4,12 +4,23 @@
     <string name="title_listView">List View</string>
     <string name="title_profile">Profile</string>
     <string name="title_moreInfo">More Info</string>
+    <string name="intro">
+        This application was developed by four UNC senior computer science students in collaboration with the Department of Public Safety.
+        For more information, call (919) 962-8100 or consult the following links:
+    </string>
     <string-array name="profileOptions">
             <item>Select</item>
             <item>Visitor</item>
             <item>Student</item>
             <item>Employee</item>
     </string-array>
+    <string name="uncParkingHomePage"><a href="https://move.unc.edu/parking/">UNC Parking Homepage</a></string>
+    <string name="employeeParking"><a href="https://move.unc.edu/parking/employee-parking/">Employee Parking</a></string>
+    <string name="studentParking"><a href="https://move.unc.edu/parking/student-parking/">Student Parking</a></string>
+    <string name="visitorPatientParking"><a href="https://move.unc.edu/parking/visitor-parking/">Visitor And Patient Parking</a></string>
+    <string name="digitalMeterParking"><a href="https://move.unc.edu/parking/meters/">Employee Parking</a></string>
+
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
