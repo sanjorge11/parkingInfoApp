@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".RegisterActivity">
+
+    <EditText
+        android:id="@+id/firstNameRegister"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:hint="Legal First Name"/>
+
+    <EditText
+        android:id="@+id/lastNameRegister"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:hint="Legal Last Name"/>
+
+    <EditText
+        android:id="@+id/emailRegister"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:hint="Email Address"/>
+
+    <EditText
+        android:id="@+id/passwordRegister"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:hint="Password" />
+
+    <EditText
+        android:id="@+id/passwordConfirmRegister"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:hint="Confirm Password" />
+
+    <Button
+        android:id="@+id/registerButton"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:onClick="registerClicked"
+        android:text="Register" />
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:onClick="backToWelcomePage"
+        android:text="Back" />
+
+</LinearLayout>

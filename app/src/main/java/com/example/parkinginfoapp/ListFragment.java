@@ -1,5 +1,6 @@
 package com.example.parkinginfoapp;
 
+import android.app.LauncherActivity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.example.parkinginfoapp.dummy.DummyContent;
 import com.example.parkinginfoapp.dummy.DummyContent.DummyItem;
+import com.google.android.gms.maps.GoogleMap;
 
 import java.util.List;
 
@@ -50,6 +52,12 @@ public class ListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if(savedInstanceState == null) {
+            System.out.println("new isntance of list");
+        } else {
+            System.out.println(savedInstanceState.getInt("val"));
+        }
+
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
@@ -69,6 +77,9 @@ public class ListFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
+
+
+
             recyclerView.setAdapter(new MyItemRecyclerViewAdapter(DummyContent.ITEMS, mListener));
         }
         return view;
@@ -105,5 +116,15 @@ public class ListFragment extends Fragment {
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
         void onListFragmentInteraction(DummyItem item);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outstate) {
+        super.onSaveInstanceState(outstate);
+
+        outstate.putInt("val", 12);
+
+        System.out.println("save");
+
     }
 }

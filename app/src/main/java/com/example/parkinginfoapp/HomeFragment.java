@@ -104,7 +104,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 //        System.out.println(mMapView);
 
         if(mMapView != null) {
-            mMapView.onCreate(null);
+            mMapView.onCreate(savedInstanceState);
             mMapView.onResume();
             mMapView.getMapAsync(this);
         }
@@ -177,6 +177,12 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
             if (location != null) {
                 mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 13));
+
+                LatLng marker1 = new LatLng(35.9106905, -79.0482881);
+                mGoogleMap.addMarker(new MarkerOptions().position(marker1).title("Marker 1"));
+
+                LatLng marker2 = new LatLng(35.277712, -80.734000);
+                mGoogleMap.addMarker(new MarkerOptions().position(marker2).title("Marker 2"));
 
                 /* Street-view 3D zoom
                 CameraPosition cameraPosition = new CameraPosition.Builder()
