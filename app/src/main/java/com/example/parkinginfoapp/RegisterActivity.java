@@ -54,10 +54,17 @@ public class RegisterActivity extends AppCompatActivity {
 
                     }
                 });
+        FirebaseUser user = mAuth.getCurrentUser();
+        if(user != null) switchToMainActivity(view);
     }
 
     public void backToWelcomePage(View view){
         Intent myIntent = new Intent(RegisterActivity.this, WelcomeActivity.class);
+        RegisterActivity.this.startActivity(myIntent);
+    }
+
+    public void switchToMainActivity(View view){
+        Intent myIntent = new Intent(RegisterActivity.this, MainActivity.class);
         RegisterActivity.this.startActivity(myIntent);
     }
 }

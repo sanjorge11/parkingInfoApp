@@ -81,13 +81,13 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         if(currentUser == null) {       //if null, then not signed in
             Intent myIntent = new Intent(MainActivity.this, WelcomeActivity.class);
             MainActivity.this.startActivity(myIntent);
+        } else {
+            updateUI(currentUser);
         }
-
-        updateUI(currentUser);
     }
 
     public void updateUI(FirebaseUser user) {
-      Toast.makeText(getApplicationContext(), "Update UI" ,
+      Toast.makeText(getApplicationContext(), "Logged in as: " + user.getEmail(),
                     Toast.LENGTH_SHORT).show();
     }
 
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
 
         backToWelcomePage(view);
 
-        updateUI(user);
+        //updateUI(user);
     }
 
     public void backToWelcomePage(View view){

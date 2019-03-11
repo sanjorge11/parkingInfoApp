@@ -6,25 +6,38 @@
     android:orientation="vertical"
     tools:context=".MoreInfoFragment">
 
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_weight="1" >
+    </Space>
+
 
     <TextView
         android:text="More Info"
-        android:layout_width="350dip"
+        android:layout_width="wrap_content"
         android:textSize="80px"
         android:layout_gravity="center"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
         android:textStyle="bold"
         android:gravity = "center"
         />
 
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="151dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:padding="@dimen/activity_horizontal_margin"
+        android:textAlignment="center"
         android:text="@string/intro" />
 
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_weight="1" >
+    </Space>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -33,42 +46,63 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAlignment="center"
             android:autoLink="web"
             android:textColor="#99badd"
             android:text="@string/uncParkingHomePage" />
 
+        <android.support.v4.widget.Space
+            android:layout_width="10dp"
+            android:layout_height="8dp" />
+
         <TextView
             android:autoLink="web"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAlignment="center"
             android:textColor="#99badd"
             android:text="@string/employeeParking" />
 
+        <android.support.v4.widget.Space
+            android:layout_width="10dp"
+            android:layout_height="8dp" />
+
         <TextView
             android:autoLink="web"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAlignment="center"
             android:textColor="#99badd"
             android:text="@string/studentParking"/>
 
-        <TextView
-            android:autoLink="web"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:gravity="center"
-            android:textColor="#99badd"
-            android:text="@string/visitorPatientParking"/>
+        <android.support.v4.widget.Space
+            android:layout_width="10dp"
+            android:layout_height="8dp" />
 
         <TextView
             android:autoLink="web"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:textColor="#99badd"
+            android:text="@string/visitorPatientParking"/>
+
+        <android.support.v4.widget.Space
+            android:layout_width="10dp"
+            android:layout_height="8dp" />
+
+        <TextView
+            android:autoLink="web"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAlignment="center"
             android:textColor="#99badd"
             android:text="@string/digitalMeterParking"/>
 
@@ -79,5 +113,17 @@
         android:layout_height="1dp"
         android:layout_weight="1" >
     </Space>
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_weight="1" >
+    </Space>
+
+    <!--<Space-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:layout_weight="1" >-->
+    <!--</Space>-->
 
 </LinearLayout>
