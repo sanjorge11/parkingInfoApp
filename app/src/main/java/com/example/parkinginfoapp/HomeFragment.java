@@ -30,6 +30,9 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import android.location.LocationManager;
+import android.widget.EditText;
+
+import java.util.List;
 
 import static android.support.constraint.Constraints.TAG;
 
@@ -91,6 +94,31 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
+        new FirebaseDatabaseHelper().readLots(new FirebaseDatabaseHelper.DataStatus_Lots() {
+            @Override
+            public void DataIsLoaded(List<Lot> lots, List<String> keys) {
+
+                System.out.println(lots);
+                System.out.println();
+            }
+
+            @Override
+            public void DataIsInserted() {
+
+            }
+
+            @Override
+            public void DataIsUpdated() {
+
+            }
+
+            @Override
+            public void DataIsDeleted() {
+
+            }
+        });
 
     }
 
@@ -192,6 +220,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                         .tilt(40)                   // Sets the tilt of the camera to 30 degrees
                         .build();                   // Creates a CameraPosition from the builder
                 mGoogleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition)); */
+
             }
 
 

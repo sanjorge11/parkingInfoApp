@@ -15,6 +15,7 @@ import com.example.parkinginfoapp.dummy.DummyContent;
 import com.example.parkinginfoapp.dummy.DummyContent.DummyItem;
 import com.google.android.gms.maps.GoogleMap;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -71,16 +72,40 @@ public class ListFragment extends Fragment {
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            final RecyclerView recyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
+            List<Lot> lotArrayList = new ArrayList<>();
+
+            //read lots
+            new FirebaseDatabaseHelper().readLots(new FirebaseDatabaseHelper.DataStatus_Lots() {
+                @Override
+                public void DataIsLoaded(List<Lot> lots, List<String> keys) {
+                    recyclerView.setAdapter(new MyItemRecyclerViewAdapter(lots, mListener));
+                }
+
+                @Override
+                public void DataIsInserted() {
+
+                }
+
+                @Override
+                public void DataIsUpdated() {
+
+                }
+
+                @Override
+                public void DataIsDeleted() {
+
+                }
+            });
 
 
-            recyclerView.setAdapter(new MyItemRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+
         }
         return view;
     }
@@ -115,16 +140,16 @@ public class ListFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(Lot item);
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outstate) {
-        super.onSaveInstanceState(outstate);
-
-        outstate.putInt("val", 12);
-
-        System.out.println("save");
-
-    }
+//    @Override
+//    public void onSaveInstanceState(Bundle outstate) {
+//        super.onSaveInstanceState(outstate);
+//
+//        outstate.putInt("val", 12);
+//
+//        System.out.println("save");
+//
+//    }
 }

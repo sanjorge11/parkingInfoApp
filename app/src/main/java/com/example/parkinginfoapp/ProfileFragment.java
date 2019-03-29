@@ -3,14 +3,24 @@ package com.example.parkinginfoapp;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.google.android.gms.maps.MapView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.sql.Ref;
+import java.util.List;
 
 
 /**
@@ -33,6 +43,8 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
 
     private OnFragmentInteractionListener mListener;
     private Spinner SpinnerProfile;
+
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -73,6 +85,34 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
 //        spinner.setAdapter(adapter);
 //        spinner.setOnItemSelectedListener(this);
 
+
+       // DatabaseReference dbRef = database.getReferenceFromUrl("https://unc-parking-app.firebaseio.com/users");
+        new FirebaseDatabaseHelper().readUsers(new FirebaseDatabaseHelper.DataStatus_Users() {
+            @Override
+            public void DataIsLoaded(List<User> users, List<String> keys) {
+
+                EditText nameEditText = (EditText) getView().findViewById(R.id.name);
+                String current_name = users.get(0).firstName + " " + users.get(0).lastName;
+                nameEditText.setText(current_name);
+
+            }
+
+            @Override
+            public void DataIsInserted() {
+
+            }
+
+            @Override
+            public void DataIsUpdated() {
+
+            }
+
+            @Override
+            public void DataIsDeleted() {
+
+            }
+        });
+
     }
 
     @Override
@@ -90,6 +130,41 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+//        new FirebaseDatabaseHelper().readUsers(new FirebaseDatabaseHelper.DataStatus() {
+//            @Override
+//            public void DataIsLoaded(List<User> users, List<String> keys) {
+//
+//                EditText nameEditText = (EditText) getView().findViewById(R.id.name);
+//                String current_name = users.get(0).firstName + " " + users.get(0).lastName;
+//                nameEditText.setText(current_name);
+//
+//                System.out.println(users);
+//                System.out.println(keys);
+//                System.out.println();
+//            }
+//
+//            @Override
+//            public void DataIsInserted() {
+//
+//            }
+//
+//            @Override
+//            public void DataIsUpdated() {
+//
+//            }
+//
+//            @Override
+//            public void DataIsDeleted() {
+//
+//            }
+//        });
+
     }
 
     @Override
