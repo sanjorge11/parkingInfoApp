@@ -53,7 +53,7 @@
             android:textStyle="bold"
             android:gravity="center"/>
         <EditText
-            android:id="@+id/options"
+            android:id="@+id/userType"
             android:layout_width="200dp"
             android:layout_height="50dp"
             android:hint="Select"
@@ -106,12 +106,17 @@
             android:textSize="45px"
             android:textStyle="bold"
             android:gravity="center"/>
-        <EditText
-            android:id="@+id/pushNotifications"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:hint=""
-            android:inputType="text|textCapWords" />
+        <!--<EditText-->
+            <!--android:id="@+id/pushNotifications"-->
+            <!--android:layout_width="200dp"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:hint=""-->
+            <!--android:inputType="text|textCapWords" />-->
+            <Button
+                android:id="@+id/pushNotificationsToggle"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:text="Disabled" />
     </LinearLayout>
 
     <Space

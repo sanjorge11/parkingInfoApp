@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -45,6 +46,8 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
     private Spinner SpinnerProfile;
 
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+    private boolean pushNotificationsEnabled;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -95,6 +98,16 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
                 String current_name = users.get(0).firstName + " " + users.get(0).lastName;
                 nameEditText.setText(current_name);
 
+                EditText userTypeEditText = (EditText) getView().findViewById(R.id.userType);
+                String current_userType = users.get(0).type;
+                userTypeEditText.setText(current_userType);
+
+                EditText permitEditText = (EditText) getView().findViewById(R.id.permits);
+                String current_permits = users.get(0).permits.get(0); //get first, this is for testing
+                permitEditText.setText(current_permits);
+
+                pushNotificationsEnabled = users.get(0).push_notifications;
+                setTextPushNotifications(getView(), pushNotificationsEnabled);
             }
 
             @Override
@@ -165,6 +178,14 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
 //            }
 //        });
 
+        Button toggleButton = (Button) view.findViewById(R.id.pushNotificationsToggle);
+        toggleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleEnable(v);
+            }
+        });
+
     }
 
     @Override
@@ -216,5 +237,21 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
         void onFragmentInteraction(Uri uri);
     }
 
+
+    public void toggleEnable(View view) {
+        pushNotificationsEnabled = !pushNotificationsEnabled;
+        setTextPushNotifications(view, pushNotificationsEnabled);
+    }
+
+    public void setTextPushNotifications(View view, boolean pushNotificationsEnabled) {
+        Button toggleButton = (Button) view.findViewById(R.id.pushNotificationsToggle);
+
+        if(pushNotificationsEnabled) {
+            toggleButton.setText("Enabled");
+        } else {
+            toggleButton.setText("Disabled");
+        }
+
+    }
 
 }

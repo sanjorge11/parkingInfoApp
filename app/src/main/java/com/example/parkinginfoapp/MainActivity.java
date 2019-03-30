@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -69,6 +70,15 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+
+        /*
+        Button signOutButton = (Button) findViewById(R.id.signOutButton);
+        signOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signOutClicked(v);
+            }
+        }); */
     }
 
     @Override
