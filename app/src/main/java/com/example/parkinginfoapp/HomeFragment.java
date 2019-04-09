@@ -32,6 +32,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import android.location.LocationManager;
 import android.widget.EditText;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.support.constraint.Constraints.TAG;
@@ -63,6 +64,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 //    MapView mMapView;
       private GoogleMap mGoogleMap;
       MapView mMapView;
+      private List<LatLng> markers = new ArrayList<>();
+      private List<Lot> lotsResponse = new ArrayList<>();
 
 
     public HomeFragment() {
@@ -90,18 +93,12 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
 
         new FirebaseDatabaseHelper().readLots(new FirebaseDatabaseHelper.DataStatus_Lots() {
             @Override
             public void DataIsLoaded(List<Lot> lots, List<String> keys) {
 
-                System.out.println(lots);
-                System.out.println();
+                lotsResponse = lots;
             }
 
             @Override
@@ -206,11 +203,20 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             if (location != null) {
                 mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 13));
 
-                LatLng marker1 = new LatLng(35.9106905, -79.0482881);
-                mGoogleMap.addMarker(new MarkerOptions().position(marker1).title("Marker 1"));
+                for(int i=0; i<lotsResponse.size(); i++) {
+                    Double latitude = lotsResponse.get(i).getLatitude();
+                    Double longitude = lotsResponse.get(i).getLongitude();
+                    String lot_name = lotsResponse.get(i).getLotName();
+                    String lot_number = lotsResponse.get(i).getLotNumber();
+                    String permit_type = lotsResponse.get(i).getPermitType();
+                    String lot_time = lotsResponse.get(i).getTime();
 
-                LatLng marker2 = new LatLng(35.277712, -80.734000);
-                mGoogleMap.addMarker(new MarkerOptions().position(marker2).title("Marker 2"));
+                    LatLng marker = new LatLng(latitude, longitude);
+                    mGoogleMap.addMarker(new MarkerOptions().position(marker).title(lot_name));
+
+                    markers.add(marker);
+                }
+
 
                 /* Street-view 3D zoom
                 CameraPosition cameraPosition = new CameraPosition.Builder()
@@ -261,7 +267,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
                 } else {
                     // Permission denied
-
                 }
                 break;
             }

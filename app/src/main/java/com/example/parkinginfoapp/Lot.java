@@ -1,7 +1,7 @@
 package com.example.parkinginfoapp;
 
 public class Lot {
-    Double lat;
+    Double latitude;
     Double longitude;
     String lot_name;
     String lot_num;
@@ -13,8 +13,8 @@ public class Lot {
 
     }
 
-    public Lot(Double lat, Double longitude, String lot_name, String lot_num, Integer object_id, String permit_type, String time) {
-        this.lat = lat;
+    public Lot(Double latitude, Double longitude, String lot_name, String lot_num, Integer object_id, String permit_type, String time) {
+        this.latitude = latitude;
         this.longitude = longitude;
         this.lot_name = lot_name;
         this.lot_num = lot_num;
@@ -24,11 +24,11 @@ public class Lot {
     }
 
     public double getLatitude() {
-        return lat;
+        return latitude;
     }
 
-    public void setLatitude(Double lat) {
-        this.lat = lat;
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
     }
 
     public Double getLongitude() {
