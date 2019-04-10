@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationListener;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,6 +14,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
+
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.MapFragment;
@@ -46,7 +50,7 @@ import static android.support.constraint.Constraints.TAG;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment implements OnMapReadyCallback {
+public class HomeFragment extends Fragment implements OnMapReadyCallback, LocationListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -62,10 +66,11 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
 //    private GoogleMap mMap;
 //    MapView mMapView;
-      private GoogleMap mGoogleMap;
-      MapView mMapView;
-      private List<LatLng> markers = new ArrayList<>();
-      private List<Lot> lotsResponse = new ArrayList<>();
+    private GoogleMap mGoogleMap;
+    MapView mMapView;
+    private List<LatLng> markers = new ArrayList<>();
+    private List<Lot> lotsResponse = new ArrayList<>();
+    LocationManager locationManager;
 
 
     public HomeFragment() {
@@ -94,6 +99,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        getLocation();
+
         new FirebaseDatabaseHelper().readLots(new FirebaseDatabaseHelper.DataStatus_Lots() {
             @Override
             public void DataIsLoaded(List<Lot> lots, List<String> keys) {
@@ -116,6 +123,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
             }
         });
+
+
 
     }
 
@@ -200,8 +209,13 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             Criteria criteria = new Criteria();
 
             Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
+            if(location == null) {
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this); //change parameters?
+                location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            }
+
             if (location != null) {
-                mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 13));
+                moveCameraToCurrentLocation(location);
 
                 for(int i=0; i<lotsResponse.size(); i++) {
                     Double latitude = lotsResponse.get(i).getLatitude();
@@ -212,7 +226,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                     String lot_time = lotsResponse.get(i).getTime();
 
                     LatLng marker = new LatLng(latitude, longitude);
-                    mGoogleMap.addMarker(new MarkerOptions().position(marker).title(lot_name));
+                    mGoogleMap.addMarker(new MarkerOptions().position(marker).title(lot_name).snippet("Available with " + permit_type + " pass"));
 
                     markers.add(marker);
                 }
@@ -237,6 +251,11 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
     }
 
+    public void moveCameraToCurrentLocation(Location location) {
+        mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 17));
+    }
+
+    //Permissions
     // Check for permission to access Location
     private boolean checkPermission() {
         Log.d(TAG, "checkPermission()");
@@ -274,6 +293,39 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     }
 
     /////
+    //Locations
+
+    void getLocation() {
+        try {
+            locationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 5, this);
+        }
+        catch(SecurityException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        //locationText.setText("Current Location: " + location.getLatitude() + ", " + location.getLongitude());
+        moveCameraToCurrentLocation(location);
+        System.out.println("Current Location: " + location.getLatitude() + ", " + location.getLongitude());
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+        //Toast.makeText(MainActivity.this, "Please Enable GPS and Internet", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
 
     /////
 }

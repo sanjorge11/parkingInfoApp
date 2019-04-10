@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_gravity="center_vertical"
     tools:context=".ProfileFragment">
@@ -30,7 +31,8 @@
             android:id="@+id/name"
             android:layout_width="200dp"
             android:layout_height="50dp"
-            android:hint="Type Name Here"
+            android:background="@android:color/transparent"
+            android:textColor="#000"
             android:inputType="textPersonName|textCapWords" />
     </LinearLayout>
 
@@ -52,12 +54,19 @@
             android:layout_height="50dp"
             android:textStyle="bold"
             android:gravity="center"/>
-        <EditText
-            android:id="@+id/userType"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:hint="Select"
-            android:inputType="text|textCapWords" />
+
+        <Spinner
+            android:id="@+id/userTypeSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+
+        <!--<EditText-->
+            <!--android:id="@+id/userType"-->
+            <!--android:layout_width="200dp"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:hint="Select"-->
+            <!--android:inputType="text|textCapWords" />-->
     </LinearLayout>
 
     <Space
@@ -79,12 +88,19 @@
             android:textSize="60px"
             android:textStyle="bold"
             android:gravity="center"/>
-        <EditText
-            android:id="@+id/permits"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:hint="Permit Type"
-            android:inputType="text|textCapWords" />
+
+        <Spinner
+            android:id="@+id/permitsSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+
+        <!--<EditText-->
+            <!--android:id="@+id/permits"-->
+            <!--android:layout_width="200dp"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:hint="Permit Type"-->
+            <!--android:inputType="text|textCapWords" />-->
     </LinearLayout>
 
     <Space
@@ -112,11 +128,17 @@
             <!--android:layout_height="50dp"-->
             <!--android:hint=""-->
             <!--android:inputType="text|textCapWords" />-->
-            <Button
-                android:id="@+id/pushNotificationsToggle"
-                android:layout_width="150dp"
-                android:layout_height="50dp"
-                android:text="Disabled" />
+
+            <!--<Button-->
+                <!--android:id="@+id/pushNotificationsToggle"-->
+                <!--android:layout_width="150dp"-->
+                <!--android:layout_height="50dp"-->
+                <!--android:text="Disabled" />-->
+            <Spinner
+                android:id="@+id/pushNotificationsSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
     </LinearLayout>
 
     <Space

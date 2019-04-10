@@ -36,8 +36,15 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).object_id.toString());
+        //holder.mIdView.setText(mValues.get(position).object_id.toString());
+//        String text = mValues.get(position).lot_name +  "\n" +
+//                "Available with " + mValues.get(position).permit_type + " permit";
+        String text =
+                "Available with " + mValues.get(position).permit_type + " permit";
+
         holder.mContentView.setText(mValues.get(position).lot_name);
+
+        holder.mSubContentView.setText(text);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,15 +65,17 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
+       // public final TextView mIdView;
         public final TextView mContentView;
+        public final TextView mSubContentView;
         public Lot mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
+           // mIdView = (TextView) view.findViewById(R.id.item_number);
             mContentView = (TextView) view.findViewById(R.id.content);
+            mSubContentView = (TextView) view.findViewById(R.id.subcontent);
         }
 
         @Override

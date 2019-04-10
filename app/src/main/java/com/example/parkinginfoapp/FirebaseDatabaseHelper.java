@@ -15,8 +15,11 @@ public class FirebaseDatabaseHelper {
     private FirebaseDatabase mDatabase;
     private DatabaseReference mReferenceUsers;
     private DatabaseReference mReferenceLots;
+    private DatabaseReference mReferencePermits;
     private List<User> users = new ArrayList<>();
     private List<Lot> lots = new ArrayList<>();
+    private List<Permit> permits = new ArrayList<>();
+
 
     public interface DataStatus_Users {
         void DataIsLoaded(List<User> users, List<String> keys);
@@ -32,10 +35,18 @@ public class FirebaseDatabaseHelper {
         void DataIsDeleted();
     }
 
+    public interface DataStatus_Permits {
+        void DataIsLoaded(List<Permit> permits, List<String> keys);
+        void DataIsInserted();
+        void DataIsUpdated();
+        void DataIsDeleted();
+    }
+
     public FirebaseDatabaseHelper() {
         mDatabase = FirebaseDatabase.getInstance();
         mReferenceLots = mDatabase.getReference("lots");
         mReferenceUsers = mDatabase.getReference("users");
+        mReferencePermits = mDatabase.getReference("permits");
     }
 
     public void readUsers(final DataStatus_Users dataStatus) {
@@ -71,6 +82,27 @@ public class FirebaseDatabaseHelper {
                     lots.add(lot);
                 }
                 dataStatus.DataIsLoaded(lots, keys);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void readPermits(final DataStatus_Permits dataStatus) {
+        mReferencePermits.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                permits.clear();
+                List<String> keys = new ArrayList<>();
+                for(DataSnapshot keyNode : dataSnapshot.getChildren()) {
+                    keys.add(keyNode.getKey());
+                    Permit permit = keyNode.getValue(Permit.class);
+                    permits.add(permit);
+                }
+                dataStatus.DataIsLoaded(permits, keys);
             }
 
             @Override

@@ -21,6 +21,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.sql.Ref;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -44,6 +46,8 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
 
     private OnFragmentInteractionListener mListener;
     private Spinner SpinnerProfile;
+    List<Permit> permitsResponse = new ArrayList<>();
+
 
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
 
@@ -79,16 +83,6 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-//        SpinnerProfile = (Spinner) findViewById(R.id.spinnerProfile);
-//        SpinnerProfile.setOnItemSelectedListener(this);
-
-//        Spinner spinner = (Spinner) findViewById(R.id.spinnerProfile);
-//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context:this, R.array.options, andorid.R.layout.simple_spinner_item);
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        spinner.setAdapter(adapter);
-//        spinner.setOnItemSelectedListener(this);
-
-
        // DatabaseReference dbRef = database.getReferenceFromUrl("https://unc-parking-app.firebaseio.com/users");
         new FirebaseDatabaseHelper().readUsers(new FirebaseDatabaseHelper.DataStatus_Users() {
             @Override
@@ -97,17 +91,21 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
                 EditText nameEditText = (EditText) getView().findViewById(R.id.name);
                 String current_name = users.get(0).firstName + " " + users.get(0).lastName;
                 nameEditText.setText(current_name);
+                nameEditText.setEnabled(false);
 
+                /*
                 EditText userTypeEditText = (EditText) getView().findViewById(R.id.userType);
                 String current_userType = users.get(0).type;
-                userTypeEditText.setText(current_userType);
+                userTypeEditText.setText(current_userType); */
 
+                /*
                 EditText permitEditText = (EditText) getView().findViewById(R.id.permits);
                 String current_permits = users.get(0).permits.get(0); //get first, this is for testing
-                permitEditText.setText(current_permits);
+                permitEditText.setText(current_permits); */
 
+                /*
                 pushNotificationsEnabled = users.get(0).push_notifications;
-                setTextPushNotifications(getView(), pushNotificationsEnabled);
+                setTextPushNotifications(getView(), pushNotificationsEnabled); */
             }
 
             @Override
@@ -126,40 +124,10 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
             }
         });
 
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
-
-//       SpinnerProfile = (Spinner) getView().findViewById(R.id.SpinnerProfile);
-//       SpinnerProfile.setOnItemSelectedListener(this);
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-//        new FirebaseDatabaseHelper().readUsers(new FirebaseDatabaseHelper.DataStatus() {
+//        new FirebaseDatabaseHelper().readPermits(new FirebaseDatabaseHelper.DataStatus_Permits() {
 //            @Override
-//            public void DataIsLoaded(List<User> users, List<String> keys) {
-//
-//                EditText nameEditText = (EditText) getView().findViewById(R.id.name);
-//                String current_name = users.get(0).firstName + " " + users.get(0).lastName;
-//                nameEditText.setText(current_name);
-//
-//                System.out.println(users);
-//                System.out.println(keys);
-//                System.out.println();
+//            public void DataIsLoaded(List<Permit> permits, List<String> keys) {
+//                permitsResponse = permits;
 //            }
 //
 //            @Override
@@ -178,13 +146,87 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
 //            }
 //        });
 
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_profile, container, false);
+    }
+
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(Uri uri) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(uri);
+        }
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        /*
         Button toggleButton = (Button) view.findViewById(R.id.pushNotificationsToggle);
         toggleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 toggleEnable(v);
             }
+        });  */
+
+        Spinner spinnerUser = view.findViewById(R.id.userTypeSpinner);
+        ArrayAdapter<CharSequence> adapterUser = ArrayAdapter.createFromResource(getContext(), R.array.profileOptions, android.R.layout.simple_spinner_item);
+        adapterUser.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerUser.setAdapter(adapterUser);
+        spinnerUser.setOnItemSelectedListener(this);
+
+
+        Spinner spinnerPushNotifications = view.findViewById(R.id.pushNotificationsSpinner);
+        ArrayAdapter<CharSequence> adapterPushNotifications = ArrayAdapter.createFromResource(getContext(), R.array.pushNotificationsOptions ,android.R.layout.simple_spinner_item);
+        adapterPushNotifications.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerPushNotifications.setAdapter(adapterPushNotifications);
+        spinnerPushNotifications.setOnItemSelectedListener(this);
+
+
+        final Spinner spinnerPermits = view.findViewById(R.id.permitsSpinner);
+        new FirebaseDatabaseHelper().readPermits(new FirebaseDatabaseHelper.DataStatus_Permits() {
+            @Override
+            public void DataIsLoaded(List<Permit> permits, List<String> keys) {
+                permitsResponse = permits;
+
+                List<String> permitStrings = new ArrayList<>();
+                for(int i=0; i<permits.size(); i++) {
+                    permitStrings.add(permits.get(i).permit_type);
+                }
+
+                Collections.sort(permitStrings);
+
+                ArrayAdapter<String> adapterPermits = new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_item, permitStrings);
+                adapterPermits.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerPermits.setAdapter(adapterPermits);
+            }
+
+            @Override
+            public void DataIsInserted() {
+
+            }
+
+            @Override
+            public void DataIsUpdated() {
+
+            }
+
+            @Override
+            public void DataIsDeleted() {
+
+            }
         });
+
+        spinnerPermits.setOnItemSelectedListener(this);
+
+
+
 
     }
 
@@ -206,15 +248,9 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
     }
 
     @Override
-    public void onItemSelected(AdapterView<?> parent, View arg1, int pos,
-                               long arg3) {
-//        parent.getItemAtPosition(pos);
-//        if (pos == 0) {
-//            ArrayAdapter<CharSequence> adapter = (ArrayAdapter<CharSequence>) ArrayAdapter
-//                    .createFromResource(this, R.array.profileOptions,
-//                            android.R.layout.simple_spinner_item);
-//            SpinnerProfile.setAdapter(adapter);
-//        }
+    public void onItemSelected(AdapterView<?> parent, View arg1, int pos, long arg3) {
+        String text = parent.getItemAtPosition(pos).toString();
+        System.out.println("Spinner selected item: " + text);
     }
 
     @Override
@@ -238,6 +274,7 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
     }
 
 
+    /*
     public void toggleEnable(View view) {
         pushNotificationsEnabled = !pushNotificationsEnabled;
         setTextPushNotifications(view, pushNotificationsEnabled);
@@ -252,6 +289,6 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
             toggleButton.setText("Disabled");
         }
 
-    }
+    } */
 
 }

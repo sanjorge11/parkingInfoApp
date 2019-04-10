@@ -9,11 +9,19 @@
         For more information, call (919) 962-8100 or consult the following links:
     </string>
     <string-array name="profileOptions">
-        <item>Select</item>
+        <!--<item>Select</item>-->
         <item>Visitor</item>
         <item>Student</item>
-        <item>Employee</item>
+        <item>University Employee</item>
+        <item>Health Care Employee</item>
     </string-array>
+
+    <string-array name="pushNotificationsOptions">
+        <item>No</item>
+        <item>Yes</item>
+
+    </string-array>
+
     <string name="uncParkingHomePage"><a href="https://move.unc.edu/parking/">UNC Parking Homepage</a></string>
     <string name="employeeParking"><a href="https://move.unc.edu/parking/employee-parking/">Employee Parking</a></string>
     <string name="studentParking"><a href="https://move.unc.edu/parking/student-parking/">Student Parking</a></string>
