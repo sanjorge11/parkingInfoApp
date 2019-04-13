@@ -125,7 +125,13 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
 
     @Override
     public void onListFragmentInteraction(Lot item) {
-        Log.i("Navigation", "Selected " + item);
+        //saddr=" + item.getLatitude() + "," + item.getLongitude() + "&
+        String url = "http://maps.google.com/maps?daddr=" + item.getLatitude() + "," + item.getLongitude();
+        Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                Uri.parse(url));
+        startActivity(intent);
+        //System.out.println("Selected item on List ---> " + item.getLotName() + " Coordinates: (" + item.getLongitude() + "," + item.getLatitude() + ")");
+        //Log.i("Navigation", "Selected " + item);
     }
 
 

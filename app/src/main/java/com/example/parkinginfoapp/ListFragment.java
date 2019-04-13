@@ -12,6 +12,7 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -91,23 +92,26 @@ public class ListFragment extends Fragment implements LocationListener {
         }
 
         getLocation();
-
-        //View itemView = inflater.inflate(R.layout.fragment_item, container, false);
-//        Button carButton = (Button) getView().findViewById(R.id.carIcon);
-//        carButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                getGoogleMapsDirections(v);
-//            }
-//        });
-
         System.out.println();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_item_list, container, false);
+        /*View viewItem = inflater.inflate(R.layout.fragment_item, container, false);
+
+
+        Button carIconButton = (Button) viewItem.findViewById(R.id.carIcon);
+        carIconButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("Button pressed");
+            }
+        }); */
+
+        System.out.println();
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -147,24 +151,21 @@ public class ListFragment extends Fragment implements LocationListener {
             });
 
 
-            View itemView = inflater.inflate(R.layout.fragment_item, container, false);
-
-            Button carButton = (Button) itemView.findViewById(R.id.carIcon);
-            carButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //System.out.println("Clicked");
-                    //getGoogleMapsDirections(v);
-                }
-            });
-
-
         }
 
         return view;
     }
 
-    public List<Lot> displaySortedList(List<Lot> lots) {
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+
+
+
+
+        public List<Lot> displaySortedList(List<Lot> lots) {
         //LocationManager locationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
         Criteria criteria = new Criteria();
         List<Lot> sortedList;
