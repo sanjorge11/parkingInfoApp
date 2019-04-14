@@ -101,28 +101,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Locati
 
         getLocation();
 
-        new FirebaseDatabaseHelper().readLots(new FirebaseDatabaseHelper.DataStatus_Lots() {
-            @Override
-            public void DataIsLoaded(List<Lot> lots, List<String> keys) {
 
-                lotsResponse = lots;
-            }
-
-            @Override
-            public void DataIsInserted() {
-
-            }
-
-            @Override
-            public void DataIsUpdated() {
-
-            }
-
-            @Override
-            public void DataIsDeleted() {
-
-            }
-        });
 
 
 
@@ -217,19 +196,45 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Locati
             if (location != null) {
                 moveCameraToCurrentLocation(location);
 
-                for(int i=0; i<lotsResponse.size(); i++) {
-                    Double latitude = lotsResponse.get(i).getLatitude();
-                    Double longitude = lotsResponse.get(i).getLongitude();
-                    String lot_name = lotsResponse.get(i).getLotName();
-                    String lot_number = lotsResponse.get(i).getLotNumber();
-                    String permit_type = lotsResponse.get(i).getPermitType();
-                    String lot_time = lotsResponse.get(i).getTime();
 
-                    LatLng marker = new LatLng(latitude, longitude);
-                    mGoogleMap.addMarker(new MarkerOptions().position(marker).title(lot_name).snippet("Available with " + permit_type + " pass"));
+                new FirebaseDatabaseHelper().readLots(new FirebaseDatabaseHelper.DataStatus_Lots() {
+                    @Override
+                    public void DataIsLoaded(List<Lot> lots, List<String> keys) {
 
-                    markers.add(marker);
-                }
+                        for(int i=0; i<lots.size(); i++) {
+                            Double latitude = lots.get(i).getLatitude();
+                            Double longitude = lots.get(i).getLongitude();
+                            String lot_name = lots.get(i).getLotName();
+                            String lot_number = lots.get(i).getLotNumber();
+                            String permit_type = lots.get(i).getPermitType();
+                            String lot_time = lots.get(i).getTime();
+
+                            LatLng marker = new LatLng(latitude, longitude);
+                            mGoogleMap.addMarker(new MarkerOptions().position(marker).title(lot_name).snippet("Available with " + permit_type + " pass"));
+
+                            markers.add(marker);
+                        }
+                        //lotsResponse = lots;
+                    }
+
+                    @Override
+                    public void DataIsInserted() {
+
+                    }
+
+                    @Override
+                    public void DataIsUpdated() {
+
+                    }
+
+                    @Override
+                    public void DataIsDeleted() {
+
+                    }
+                });
+
+
+
 
 
                 /* Street-view 3D zoom
@@ -249,6 +254,12 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Locati
             askPermission();
         }
 
+    }
+
+    @Override
+    public void onResume() {
+        mMapView.onResume();
+        super.onResume();
     }
 
     public void moveCameraToCurrentLocation(Location location) {
