@@ -252,7 +252,10 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Locati
     }
 
     public void moveCameraToCurrentLocation(Location location) {
-        mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 17));
+        //mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 17));
+
+        //move camera to current location in one frame rather than animation
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 17));
     }
 
     //Permissions
