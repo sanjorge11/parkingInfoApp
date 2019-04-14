@@ -26,6 +26,25 @@
         android:layout_height="50dp"
         android:hint="Email Address"/>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:text="Permit:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:gravity="center"/>
+        <Spinner
+            android:id="@+id/permitsRegisterSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+
+
     <EditText
         android:id="@+id/passwordRegister"
         android:layout_width="200dp"

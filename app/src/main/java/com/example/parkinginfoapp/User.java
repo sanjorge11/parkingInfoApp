@@ -7,19 +7,17 @@ public class User {
     String firstName;
     String lastName;
     ArrayList<String> permits;
-    boolean push_notifications;
     String type;
 
     public User() {
 
     }
 
-    public User(String email, String firstName, String lastName, ArrayList<String> permits, boolean push_notifications, String type) {
+    public User(String email, String firstName, String lastName, ArrayList<String> permits, String type) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.permits = permits;
-        this.push_notifications = push_notifications;
         this.type = type;
     }
 
@@ -53,14 +51,6 @@ public class User {
 
     public void setPermits(ArrayList<String> permits) {
         this.permits = permits;
-    }
-
-    public boolean getPushNotifications() {
-        return push_notifications;
-    }
-
-    public void setPushNotifications(boolean push_notifications) {
-        this.push_notifications = push_notifications;
     }
 
     public String getType() {

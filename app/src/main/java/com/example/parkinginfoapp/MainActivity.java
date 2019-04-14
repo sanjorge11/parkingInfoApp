@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         MoreInfoFragment.OnFragmentInteractionListener {
 
     private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -86,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        currentUser = mAuth.getCurrentUser();
         System.out.println();
 
         if(currentUser == null) {       //if null, then not signed in
@@ -100,6 +101,13 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
     public void updateUI(FirebaseUser user) {
       Toast.makeText(getApplicationContext(), "Logged in as: " + user.getEmail(),
                     Toast.LENGTH_SHORT).show();
+
+      //String uid = user.getUid();
+      System.out.println();
+    }
+
+    public String getUID() {
+        return currentUser.getUid();
     }
 
     public void signOutClicked(View view) {

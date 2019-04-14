@@ -2,6 +2,8 @@ package com.example.parkinginfoapp;
 
 import android.support.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,6 +30,13 @@ public class FirebaseDatabaseHelper {
         void DataIsDeleted();
     }
 
+    public interface DataStatus_CurrentUser {
+        void DataIsLoaded(User user, String key);
+        void DataIsInserted(User user);
+        void DataIsUpdated();
+        void DataIsDeleted();
+    }
+
     public interface DataStatus_Lots {
         void DataIsLoaded(List<Lot> lots, List<String> keys);
         void DataIsInserted();
@@ -47,6 +56,55 @@ public class FirebaseDatabaseHelper {
         mReferenceLots = mDatabase.getReference("lots");
         mReferenceUsers = mDatabase.getReference("users");
         mReferencePermits = mDatabase.getReference("permits");
+    }
+
+    public void readCurrentUser(String uid, final DataStatus_CurrentUser dataStatus) {
+
+        String path = "users/" + uid;
+        DatabaseReference mReferenceCurrentUser = mDatabase.getReference(path);
+
+        mReferenceCurrentUser.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String key = dataSnapshot.getKey();
+                User user = dataSnapshot.getValue(User.class);
+
+                dataStatus.DataIsLoaded(user, key);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void insertCurrentUser(String uid, final User user, final DataStatus_CurrentUser dataStatus) {
+
+        String path = "users/" + uid;
+        DatabaseReference mReferenceCurrentUser = mDatabase.getReference("users");
+
+        mReferenceCurrentUser.child(uid).setValue(user)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // Write was successful!
+                        // ...
+                        //System.out.println("success");
+                        dataStatus.DataIsInserted(user);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Write failed
+                        // ...
+                        //System.out.println("failure");
+                    }
+                });
+
+
+
     }
 
     public void readUsers(final DataStatus_Users dataStatus) {

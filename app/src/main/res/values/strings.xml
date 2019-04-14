@@ -10,6 +10,7 @@
     </string>
     <string-array name="profileOptions">
         <!--<item>Select</item>-->
+        <item>None</item>
         <item>Visitor</item>
         <item>Student</item>
         <item>University Employee</item>
