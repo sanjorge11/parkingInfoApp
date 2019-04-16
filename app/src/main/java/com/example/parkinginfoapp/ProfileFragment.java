@@ -55,9 +55,10 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseUser currentUser = mAuth.getCurrentUser();
-    private String currentUserType;
     List<String> profileOptions;
     User currentUserRef;
+    String currentUserType;
+    String currentUserPermit;
 
     private boolean pushNotificationsEnabled;
 
@@ -117,17 +118,17 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        /*
-        Button toggleButton = (Button) view.findViewById(R.id.pushNotificationsToggle);
-        toggleButton.setOnClickListener(new View.OnClickListener() {
+
+        Button saveChangesButton = (Button) view.findViewById(R.id.saveChangesButton);
+        saveChangesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toggleEnable(v);
+                saveChanges(v);
             }
-        });  */
+        });
 
 
         final Spinner spinnerUser = view.findViewById(R.id.userTypeSpinner);
@@ -139,12 +140,13 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
             @Override
             public void DataIsLoaded(User user, String key) {
 
-                EditText nameEditText = (EditText) getView().findViewById(R.id.name);
+                EditText nameEditText = (EditText) view.findViewById(R.id.name);
                 String current_name = user.firstName + " " + user.lastName;
                 nameEditText.setText(current_name);
                 nameEditText.setEnabled(false);
 
                 String userType = user.getType();
+                currentUserType = user.getType();
                 profileOptions = Arrays.asList(getResources().getStringArray(R.array.profileOptions));
 
                 currentUserRef = user;
@@ -219,6 +221,7 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
 
                 int permitSelected = 0;
                 List<String> currentPermit = currentUserRef.getPermits();
+                currentUserPermit = currentPermit.get(0) != null && currentPermit.size() > 0 ? currentPermit.get(0) : "";
                 if(currentPermit != null && currentPermit.size() > 0) {     //should be size 1 always
                     for(int i=0; i<permitStrings.size(); i++) {
                         if(permitStrings.get(i).equals(currentPermit.get(0))) {
@@ -276,7 +279,16 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
     @Override
     public void onItemSelected(AdapterView<?> parent, View arg1, int pos, long arg3) {
         String text = parent.getItemAtPosition(pos).toString();
-        System.out.println("Spinner selected item: " + text);
+
+        if(parent.getId() == R.id.userTypeSpinner) {
+            currentUserType = text;
+
+            System.out.println("User Type Spinner selected item: " + text);
+        } else if (parent.getId() == R.id.permitsSpinner) {
+            currentUserPermit = text;
+
+            System.out.println("Permit Spinner selected item: " + text);
+        } else { }
     }
 
     @Override
@@ -299,6 +311,45 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
         void onFragmentInteraction(Uri uri);
     }
 
+
+    public void saveChanges(View view) {
+
+
+        currentUserRef.setType(currentUserType);
+        ArrayList<String> permits = new ArrayList<>();
+        permits.add(currentUserPermit);
+        currentUserRef.setPermits(permits);
+        System.out.println();
+
+
+        new FirebaseDatabaseHelper().insertCurrentUser(currentUser.getUid(), currentUserRef, new FirebaseDatabaseHelper.DataStatus_CurrentUser() {
+            @Override
+            public void DataIsLoaded(User user, String key) {
+
+            }
+
+            @Override
+            public void DataIsInserted(User user) {
+
+                //System.out.println(user);
+                //System.out.println("success");
+            }
+
+            @Override
+            public void DataIsUpdated() {
+
+            }
+
+            @Override
+            public void DataIsDeleted() {
+
+            }
+        });
+
+        //System.out.println(currentUserType);
+        //System.out.println(currentUserPermit);
+        //System.out.println();
+    }
 
     /*
     public void toggleEnable(View view) {
