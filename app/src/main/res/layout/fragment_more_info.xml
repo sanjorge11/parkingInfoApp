@@ -7,31 +7,21 @@
     tools:context=".MoreInfoFragment">
 
     <Space
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_weight="1" >
+        android:layout_width="1dp"
+        android:layout_height="20dp">
     </Space>
 
 
     <TextView
-        android:text="More Info"
-        android:layout_width="wrap_content"
-        android:textSize="80px"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textStyle="bold"
-        android:gravity = "center"
-        />
-
-
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:padding="@dimen/activity_horizontal_margin"
+        android:autoLink="web"
+        android:textSize="32sp"
+        android:text="@string/more_info"
         android:textAlignment="center"
-        android:text="@string/intro" />
+        android:textColor="#99badd" />
+
 
     <Space
         android:layout_width="0dp"
@@ -41,70 +31,161 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="550dp"
         android:layout_gravity="center"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
+
+        <Button
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textAlignment="center"
-            android:autoLink="web"
-            android:textColor="#99badd"
-            android:text="@string/uncParkingHomePage" />
+            android:background="@color/colorPrimary"
+            android:bottomLeftRadius="10dip"
+            android:bottomRightRadius="10dip"
+            android:text="@string/appeal_pay_citation"
+            android:topLeftRadius="10dip"
+            android:topRightRadius="10dip" />
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="8dp" />
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/colorPrimary"
+            android:bottomLeftRadius="10dip"
+            android:bottomRightRadius="10dip"
+            android:text="@string/unc_transit"
+            android:topLeftRadius="10dip"
+            android:topRightRadius="10dip" />
+
+        <android.support.v4.widget.Space
+            android:layout_width="10dp"
+            android:layout_height="8dp" />
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/colorPrimary"
+            android:bottomLeftRadius="10dip"
+            android:bottomRightRadius="10dip"
+            android:text="@string/unc_parking"
+            android:topLeftRadius="10dip"
+            android:topRightRadius="10dip" />
+
+
+
+        <android.support.v4.widget.Space
+            android:layout_width="10dp"
+            android:layout_height="8dp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/colorPrimary"
+            android:bottomLeftRadius="10dip"
+            android:bottomRightRadius="10dip"
+            android:text="@string/unc_alternative_program"
+            android:topLeftRadius="10dip"
+            android:topRightRadius="10dip" />
+
+        <android.support.v4.widget.Space
+            android:layout_width="10dp"
+            android:layout_height="8dp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/colorPrimary"
+            android:bottomLeftRadius="10dip"
+            android:bottomRightRadius="10dip"
+            android:text="@string/uncpricinginfo"
+            android:topLeftRadius="10dip"
+            android:topRightRadius="10dip" />
+
+        <android.support.v4.widget.Space
+            android:layout_width="10dp"
+            android:layout_height="8dp" />
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/colorPrimary"
+            android:bottomLeftRadius="10dip"
+            android:bottomRightRadius="10dip"
+            android:text="@string/park_at_a_unc_event"
+            android:topLeftRadius="10dip"
+            android:topRightRadius="10dip" />
+
+        <android.support.v4.widget.Space
+            android:layout_width="10dp"
+            android:layout_height="8dp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/colorPrimary"
+            android:bottomLeftRadius="10dip"
+            android:bottomRightRadius="10dip"
+            android:text="@string/get_the_transLoc_rider_app"
+            android:topLeftRadius="10dip"
+            android:topRightRadius="10dip" />
+
+        <android.support.v4.widget.Space
+            android:layout_width="10dp"
+            android:layout_height="8dp" />
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/colorPrimary"
+            android:bottomLeftRadius="10dip"
+            android:bottomRightRadius="10dip"
+            android:text="@string/get_the_transLoc_rider_app"
+            android:topLeftRadius="10dip"
+            android:topRightRadius="10dip" />
+
+        <android.support.v4.widget.Space
+            android:layout_width="10dp"
+            android:layout_height="8dp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/colorPrimary"
+            android:bottomLeftRadius="10dip"
+            android:bottomRightRadius="10dip"
+            android:text="@string/get_the_parkmobile_app"
+            android:topLeftRadius="10dip"
+            android:topRightRadius="10dip" />
 
         <android.support.v4.widget.Space
             android:layout_width="10dp"
             android:layout_height="8dp" />
 
         <TextView
-            android:autoLink="web"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textAlignment="center"
-            android:textColor="#99badd"
-            android:text="@string/employeeParking" />
-
-        <android.support.v4.widget.Space
-            android:layout_width="10dp"
-            android:layout_height="8dp" />
-
-        <TextView
             android:autoLink="web"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:text="@string/transportation_and_parking"
             android:textAlignment="center"
-            android:textColor="#99badd"
-            android:text="@string/studentParking"/>
+            android:textColor="#99badd" />
 
-        <android.support.v4.widget.Space
-            android:layout_width="10dp"
-            android:layout_height="8dp" />
-
-        <TextView
-            android:autoLink="web"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textAlignment="center"
-            android:textColor="#99badd"
-            android:text="@string/visitorPatientParking"/>
-
-        <android.support.v4.widget.Space
-            android:layout_width="10dp"
-            android:layout_height="8dp" />
-
-        <TextView
-            android:autoLink="web"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textAlignment="center"
-            android:textColor="#99badd"
-            android:text="@string/digitalMeterParking"/>
 
     </LinearLayout>
 

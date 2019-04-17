@@ -23,12 +23,16 @@
 
     </string-array>
 
-    <string name="uncParkingHomePage"><a href="https://move.unc.edu/parking/">UNC Parking Homepage</a></string>
-    <string name="employeeParking"><a href="https://move.unc.edu/parking/employee-parking/">Employee Parking</a></string>
-    <string name="studentParking"><a href="https://move.unc.edu/parking/student-parking/">Student Parking</a></string>
-    <string name="visitorPatientParking"><a href="https://move.unc.edu/parking/visitor-parking/">Visitor And Patient Parking</a></string>
-    <string name="digitalMeterParking"><a href="https://move.unc.edu/parking/meters/">Employee Parking</a></string>
-
+    <string name="more_info">More Info</string>
+    <string name="appeal_pay_citation">Appeal/Pay a Citation</string>
+    <string name="unc_transit">Learn about Park and Ride/Transit Services</string>
+    <string name="unc_parking">Learn about Parking</string>
+    <string name="unc_alternative_program">Sign Up for the Commuter Alternative Program</string>
+    <string name="uncpricinginfo">View Pricing Information</string>
+    <string name="park_at_a_unc_event">Park at a UNC Event</string>
+    <string name="get_the_transLoc_rider_app">Get the TransLoc Rider App</string>
+    <string name="get_the_parkmobile_app">Get the Parkmobile App</string>
+    <string name="transportation_and_parking">Get to the main Transportation and Parking website</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
