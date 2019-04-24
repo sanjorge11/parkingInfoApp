@@ -1,7 +1,11 @@
 package com.example.parkinginfoapp;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.icu.text.DateIntervalFormat;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -21,6 +25,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import androidx.navigation.Navigation;
 
@@ -62,16 +69,43 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         }
     };
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel channel =
+                    new NotificationChannel("MyNotifications","MyNotifications ", NotificationManager.IMPORTANCE_DEFAULT);
+
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+
+        }
+
+        FirebaseMessaging.getInstance().subscribeToTopic("general")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        String msg = "Successful";
+                        if (!task.isSuccessful()) {
+                            msg = "Failed";
+                        }
+                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
 
         /*
         Button signOutButton = (Button) findViewById(R.id.signOutButton);
@@ -82,6 +116,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
             }
         }); */
     }
+
 
     @Override
     public void onStart() {
@@ -141,6 +176,9 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         //System.out.println("Selected item on List ---> " + item.getLotName() + " Coordinates: (" + item.getLongitude() + "," + item.getLatitude() + ")");
         //Log.i("Navigation", "Selected " + item);
     }
+
+
+
 
 
 

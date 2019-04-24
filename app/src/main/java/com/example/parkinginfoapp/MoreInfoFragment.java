@@ -1,12 +1,16 @@
 package com.example.parkinginfoapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 
 /**
@@ -67,7 +71,85 @@ public class MoreInfoFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_more_info, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
+    @Override
+    public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        Button button1 = view.findViewById(R.id.button1);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                button1(v);
+            }
+        });
+
+        Button button2 = view.findViewById(R.id.button2);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                button2(v);
+            }
+        });
+
+        Button button3 = view.findViewById(R.id.button3);
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                button3(v);
+            }
+        });
+
+        Button button4 = view.findViewById(R.id.button4);
+        button4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                button4(v);
+            }
+        });
+
+        Button button5 = view.findViewById(R.id.button5);
+        button5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                button5(v);
+            }
+        });
+
+        Button button6 = view.findViewById(R.id.button6);
+        button6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                button6(v);
+            }
+        });
+
+        Button button7 = view.findViewById(R.id.button7);
+        button7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                button7(v);
+            }
+        });
+
+        Button button8 = view.findViewById(R.id.button8);
+        button8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                button8(v);
+            }
+        });
+
+        Button button9 = view.findViewById(R.id.button9);
+        button9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                button9(v);
+            }
+        });
+
+    }
+
+        // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -105,4 +187,50 @@ public class MoreInfoFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+    public void button1(View v){
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW,Uri.parse("https://move.unc.edu/about/online-services/"));
+        startActivity(browserIntent);
+    }
+
+    public void button2(View v){
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW,Uri.parse("https://move.unc.edu/transit/"));
+        startActivity(browserIntent);
+    }
+
+    public void button3(View v){
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW,Uri.parse("https://move.unc.edu/parking/"));
+        startActivity(browserIntent);
+    }
+
+    public void button4(View v){
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW,Uri.parse("https://move.unc.edu/cap/"));
+        startActivity(browserIntent);
+    }
+
+    public void button5(View v){
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW,Uri.parse("https://move.unc.edu/about/pricing/"));
+        startActivity(browserIntent);
+    }
+
+    public void button6(View v){
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW,Uri.parse("https://move.unc.edu/events/"));
+        startActivity(browserIntent);
+    }
+
+    public void button7(View v){
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW,Uri.parse("http://translocrider.com/"));
+        startActivity(browserIntent);
+    }
+
+    public void button8(View v){
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW,Uri.parse("https://parkmobile.io/"));
+        startActivity(browserIntent);
+    }
+
+    public void button9(View v){
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW,Uri.parse("https://move.unc.edu"));
+        startActivity(browserIntent);
+    }
+
 }

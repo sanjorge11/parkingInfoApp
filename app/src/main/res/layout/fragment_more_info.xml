@@ -8,7 +8,7 @@
 
     <Space
         android:layout_width="1dp"
-        android:layout_height="20dp">
+        android:layout_height="15dp">
     </Space>
 
 
@@ -17,35 +17,36 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:autoLink="web"
-        android:textSize="32sp"
         android:text="@string/more_info"
         android:textAlignment="center"
-        android:textColor="#99badd" />
+        android:textColor="#99badd"
+        android:textSize="32sp" />
 
 
     <Space
         android:layout_width="0dp"
-        android:layout_height="1dp"
+        android:layout_height="15dp"
         android:layout_weight="1" >
     </Space>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="380dp"
         android:layout_height="550dp"
         android:layout_gravity="center"
         android:orientation="vertical">
 
 
         <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:id="@+id/button1"
+            style="@style/Base.CardView"
+            android:layout_width="330dp"
+            android:layout_height="@dimen/place_autocomplete_powered_by_google_height"
             android:layout_gravity="center"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/more_info_button"
             android:bottomLeftRadius="10dip"
             android:bottomRightRadius="10dip"
-            android:text="@string/appeal_pay_citation"
-            android:topLeftRadius="10dip"
-            android:topRightRadius="10dip" />
+            android:radius="125dp"
+            android:text="@string/appeal_pay_citation" />
 
         <Space
             android:layout_width="10dp"
@@ -53,15 +54,16 @@
 
 
         <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:id="@+id/button2"
+            style="@style/Base.CardView"
+            android:layout_width="330dp"
+            android:layout_height="@dimen/place_autocomplete_powered_by_google_height"
             android:layout_gravity="center"
-            android:background="@color/colorPrimary"
-            android:bottomLeftRadius="10dip"
-            android:bottomRightRadius="10dip"
+            android:background="@drawable/more_info_button"
             android:text="@string/unc_transit"
             android:topLeftRadius="10dip"
-            android:topRightRadius="10dip" />
+            android:topRightRadius="10dip"
+             />
 
         <android.support.v4.widget.Space
             android:layout_width="10dp"
@@ -69,16 +71,16 @@
 
 
         <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:id="@+id/button3"
+            style="@style/Base.CardView"
+            android:layout_width="330dp"
+            android:layout_height="@dimen/place_autocomplete_powered_by_google_height"
             android:layout_gravity="center"
-            android:background="@color/colorPrimary"
-            android:bottomLeftRadius="10dip"
-            android:bottomRightRadius="10dip"
+            android:background="@drawable/more_info_button"
             android:text="@string/unc_parking"
             android:topLeftRadius="10dip"
-            android:topRightRadius="10dip" />
-
+            android:topRightRadius="10dip"
+            />
 
 
         <android.support.v4.widget.Space
@@ -86,30 +88,33 @@
             android:layout_height="8dp" />
 
         <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:id="@+id/button4"
+            style="@style/Base.CardView"
+            android:layout_width="330dp"
+            android:layout_height="@dimen/place_autocomplete_powered_by_google_height"
             android:layout_gravity="center"
-            android:background="@color/colorPrimary"
-            android:bottomLeftRadius="10dip"
-            android:bottomRightRadius="10dip"
+            android:background="@drawable/more_info_button"
             android:text="@string/unc_alternative_program"
             android:topLeftRadius="10dip"
-            android:topRightRadius="10dip" />
+            android:topRightRadius="10dip"
+            />
 
         <android.support.v4.widget.Space
             android:layout_width="10dp"
             android:layout_height="8dp" />
 
         <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:id="@+id/button5"
+            style="@style/Base.CardView"
+            android:layout_width="330dp"
+            android:layout_height="@dimen/place_autocomplete_powered_by_google_height"
             android:layout_gravity="center"
-            android:background="@color/colorPrimary"
-            android:bottomLeftRadius="10dip"
-            android:bottomRightRadius="10dip"
+            android:background="@drawable/more_info_button"
             android:text="@string/uncpricinginfo"
             android:topLeftRadius="10dip"
-            android:topRightRadius="10dip" />
+            android:topRightRadius="10dip"
+
+            />
 
         <android.support.v4.widget.Space
             android:layout_width="10dp"
@@ -117,30 +122,16 @@
 
 
         <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:id="@+id/button6"
+            style="@style/Base.CardView"
+            android:layout_width="330dp"
+            android:layout_height="@dimen/place_autocomplete_powered_by_google_height"
             android:layout_gravity="center"
-            android:background="@color/colorPrimary"
-            android:bottomLeftRadius="10dip"
-            android:bottomRightRadius="10dip"
+            android:background="@drawable/more_info_button"
             android:text="@string/park_at_a_unc_event"
             android:topLeftRadius="10dip"
             android:topRightRadius="10dip" />
 
-        <android.support.v4.widget.Space
-            android:layout_width="10dp"
-            android:layout_height="8dp" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@color/colorPrimary"
-            android:bottomLeftRadius="10dip"
-            android:bottomRightRadius="10dip"
-            android:text="@string/get_the_transLoc_rider_app"
-            android:topLeftRadius="10dip"
-            android:topRightRadius="10dip" />
 
         <android.support.v4.widget.Space
             android:layout_width="10dp"
@@ -148,12 +139,12 @@
 
 
         <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:id="@+id/button7"
+            style="@style/Base.CardView"
+            android:layout_width="330dp"
+            android:layout_height="@dimen/place_autocomplete_powered_by_google_height"
             android:layout_gravity="center"
-            android:background="@color/colorPrimary"
-            android:bottomLeftRadius="10dip"
-            android:bottomRightRadius="10dip"
+            android:background="@drawable/more_info_button"
             android:text="@string/get_the_transLoc_rider_app"
             android:topLeftRadius="10dip"
             android:topRightRadius="10dip" />
@@ -163,12 +154,12 @@
             android:layout_height="8dp" />
 
         <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:id="@+id/button8"
+            style="@style/Base.CardView"
+            android:layout_width="330dp"
+            android:layout_height="@dimen/place_autocomplete_powered_by_google_height"
             android:layout_gravity="center"
-            android:background="@color/colorPrimary"
-            android:bottomLeftRadius="10dip"
-            android:bottomRightRadius="10dip"
+            android:background="@drawable/more_info_button"
             android:text="@string/get_the_parkmobile_app"
             android:topLeftRadius="10dip"
             android:topRightRadius="10dip" />
@@ -177,14 +168,14 @@
             android:layout_width="10dp"
             android:layout_height="8dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <Button
+            android:id="@+id/button9"
+            style="@style/Base.CardView"
+            android:layout_width="330dp"
+            android:layout_height="@dimen/place_autocomplete_powered_by_google_height"
             android:layout_gravity="center"
-            android:autoLink="web"
-            android:text="@string/transportation_and_parking"
-            android:textAlignment="center"
-            android:textColor="#99badd" />
+            android:background="@drawable/more_info_button"
+            android:text="@string/transportation_and_parking" />
 
 
     </LinearLayout>
