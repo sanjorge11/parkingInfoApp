@@ -13,6 +13,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -22,18 +24,27 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.PopupMenu;
+import android.widget.Spinner;
 
 import com.example.parkinginfoapp.dummy.DummyContent;
 import com.example.parkinginfoapp.dummy.DummyContent.DummyItem;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -46,13 +57,24 @@ import static android.support.constraint.Constraints.TAG;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class ListFragment extends Fragment implements LocationListener {
+public class ListFragment extends Fragment implements LocationListener, AdapterView.OnItemSelectedListener {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
+    User currentUserRef;
+    String currentUserPermit;
+    String userActualPermit;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private FirebaseUser currentUser = mAuth.getCurrentUser();
+    private MyItemRecyclerViewAdapter adapterLots;
+    //String currentUserType;
+    Spinner spinnerPermits;
+    List<String> permitStrings = new ArrayList<>();
+
+
 
     LocationManager locationManager;
     private final int REQ_PERMISSION = 101;
@@ -82,7 +104,7 @@ public class ListFragment extends Fragment implements LocationListener {
 
 
         if(savedInstanceState == null) {
-            System.out.println("new isntance of list");
+            System.out.println("new instance of list");
         } else {
             System.out.println(savedInstanceState.getInt("val"));
         }
@@ -103,6 +125,7 @@ public class ListFragment extends Fragment implements LocationListener {
         /*View viewItem = inflater.inflate(R.layout.fragment_item, container, false);
 
 
+
         Button carIconButton = (Button) viewItem.findViewById(R.id.carIcon);
         carIconButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,12 +134,17 @@ public class ListFragment extends Fragment implements LocationListener {
             }
         }); */
 
+        final View listView = view.findViewById(R.id.list);
+
         System.out.println();
 
+
+
+
         // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            final RecyclerView recyclerView = (RecyclerView) view;
+        if (listView instanceof RecyclerView) {
+            Context context = listView.getContext();
+            final RecyclerView recyclerView = (RecyclerView) listView;
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
@@ -131,7 +159,9 @@ public class ListFragment extends Fragment implements LocationListener {
 
                     List<Lot> sortedList = displaySortedList(lots);     //optimize this
 
-                    recyclerView.setAdapter(new MyItemRecyclerViewAdapter(sortedList, mListener));
+                    adapterLots = new MyItemRecyclerViewAdapter(sortedList, mListener);
+
+                    recyclerView.setAdapter(adapterLots);
                 }
 
                 @Override
@@ -152,6 +182,128 @@ public class ListFragment extends Fragment implements LocationListener {
 
 
         }
+
+//        FloatingActionButton fab = view.findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
+////                        .setAction("Action", null).show();
+//                PopupMenu popup = new PopupMenu(this, fab);
+//                MenuInflater inflater = popup.getMenuInflater();
+//                inflater.inflate(R.menu.your_menu, popup.getMenu());
+//                popup.show();
+//            }
+//        });
+
+        new FirebaseDatabaseHelper().readCurrentUser(currentUser.getUid(), new FirebaseDatabaseHelper.DataStatus_CurrentUser() {
+            @Override
+            public void DataIsLoaded(User user, String key) {
+
+                currentUserRef = user;
+
+                System.out.println();
+            }
+
+            @Override
+            public void DataIsInserted(User user) {
+
+            }
+
+            @Override
+            public void DataIsUpdated() {
+
+            }
+
+            @Override
+            public void DataIsDeleted() {
+
+            }
+        });
+
+        spinnerPermits = view.findViewById(R.id.listPermitSpinner);
+        new FirebaseDatabaseHelper().readPermits(new FirebaseDatabaseHelper.DataStatus_Permits() {
+            @Override
+            public void DataIsLoaded(List<Permit> permits, List<String> keys) {
+               // permitsResponse = permits;
+
+                //List<String> permitStrings = new ArrayList<>();
+                for(int i=0; i<permits.size(); i++) {
+                    permitStrings.add(permits.get(i).permit_type);
+                }
+
+                Collections.sort(permitStrings);
+                permitStrings.add(0, "All");
+
+                ArrayAdapter<String> adapterPermits = new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_item, permitStrings);
+                adapterPermits.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                int permitSelected = 0;
+                List<String> currentPermit = currentUserRef.getPermits();
+                currentUserPermit = currentPermit.get(0) != null && currentPermit.size() > 0 ? currentPermit.get(0) : "";
+                userActualPermit = currentPermit.get(0) != null && currentPermit.size() > 0 ? currentPermit.get(0) : "";
+
+                if(currentPermit != null && currentPermit.size() > 0) {     //should be size 1 always
+                    for(int i=0; i<permitStrings.size(); i++) {
+                        if(permitStrings.get(i).equals(currentPermit.get(0))) {
+                            permitSelected = i;
+                            break;
+                        }
+                    }
+                }
+
+                spinnerPermits.setAdapter(adapterPermits);
+                spinnerPermits.setSelection(permitSelected);
+
+                filterRecyclerView(adapterLots);
+            }
+
+            @Override
+            public void DataIsInserted() {
+
+            }
+
+            @Override
+            public void DataIsUpdated() {
+
+            }
+
+            @Override
+            public void DataIsDeleted() {
+
+            }
+        });
+
+        spinnerPermits.setOnItemSelectedListener(this);
+
+        /////////
+        Button filterButton = (Button) view.findViewById(R.id.filterButton);
+        filterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                filterRecyclerView(adapterLots);
+//                Context context = listView.getContext();
+//                final RecyclerView recyclerView = (RecyclerView) listView;
+//                if (mColumnCount <= 1) {
+//                    recyclerView.setLayoutManager(new LinearLayoutManager(context));
+//                } else {
+//                    recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+//                }
+
+
+                //filterRecyclerView(recyclerView);
+            }
+        });
+
+        Button clearButton = (Button) view.findViewById(R.id.clearButton);
+        clearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //System.out.println("Clear clicked");
+                getMyLots(adapterLots);
+            }
+        });
+
 
         return view;
     }
@@ -250,6 +402,24 @@ public class ListFragment extends Fragment implements LocationListener {
         mListener = null;
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String text = parent.getItemAtPosition(position).toString();
+
+        if(parent.getId() == R.id.listPermitSpinner) {
+            currentUserPermit = text;
+
+            System.out.println("User Type Spinner selected item: " + text);
+        }  else { }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -328,4 +498,29 @@ public class ListFragment extends Fragment implements LocationListener {
     }
 
     /////
+
+    public void filterRecyclerView(MyItemRecyclerViewAdapter adapter) {
+        adapter.getFilter().filter(currentUserPermit);
+    }
+
+    public void getMyLots(MyItemRecyclerViewAdapter adapter) {
+
+        int permitSelected = 0;
+        List<String> currentPermit = currentUserRef.getPermits();
+        currentUserPermit = currentPermit.get(0) != null && currentPermit.size() > 0 ? currentPermit.get(0) : "";
+        userActualPermit = currentPermit.get(0) != null && currentPermit.size() > 0 ? currentPermit.get(0) : "";
+
+        if(currentPermit != null && currentPermit.size() > 0) {     //should be size 1 always
+            for(int i=0; i<permitStrings.size(); i++) {
+                if(permitStrings.get(i).equals(currentPermit.get(0))) {
+                    permitSelected = i;
+                    break;
+                }
+            }
+        }
+
+        spinnerPermits.setSelection(permitSelected);
+
+        adapter.getFilter().filter(userActualPermit);
+    }
 }

@@ -5,11 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.example.parkinginfoapp.ListFragment.OnListFragmentInteractionListener;
 import com.example.parkinginfoapp.dummy.DummyContent.DummyItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,14 +20,16 @@ import java.util.List;
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder> {
+public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder> implements Filterable {
 
-    private final List<Lot> mValues;
+    private List<Lot> mValues;
     private final OnListFragmentInteractionListener mListener;
+    private List<Lot> mValuesFull;
 
     public MyItemRecyclerViewAdapter(List<Lot> items, OnListFragmentInteractionListener listener) {
-        mValues = items;
+        mValues = new ArrayList<>(items);
         mListener = listener;
+        this.mValuesFull = new ArrayList<>(mValues);
     }
 
     @Override
@@ -74,6 +79,43 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
     public int getItemCount() {
         return mValues.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return lotFilter;
+    }
+
+    private Filter lotFilter = new Filter() {
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Lot> filteredLots = new ArrayList<>();
+
+            if(constraint == null || constraint.length() == 0 || constraint.toString().equals("All")) {
+                filteredLots.addAll(mValuesFull);
+            } else {
+                String filterPattern = constraint.toString().trim();
+
+                for(Lot lot : mValuesFull) {
+                    if(lot.getPermitType().equals(filterPattern)) {
+                        filteredLots.add(lot);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredLots;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            mValues.clear();
+            mValues.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;

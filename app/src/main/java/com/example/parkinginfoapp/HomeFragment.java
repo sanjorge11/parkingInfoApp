@@ -33,10 +33,18 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import android.location.LocationManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static android.support.constraint.Constraints.TAG;
@@ -50,7 +58,7 @@ import static android.support.constraint.Constraints.TAG;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment implements OnMapReadyCallback, LocationListener {
+public class HomeFragment extends Fragment implements OnMapReadyCallback, LocationListener, AdapterView.OnItemSelectedListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -68,9 +76,18 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Locati
 //    MapView mMapView;
     private GoogleMap mGoogleMap;
     MapView mMapView;
-    private List<LatLng> markers = new ArrayList<>();
+    private List<Lot> markers = new ArrayList<>();
     private List<Lot> lotsResponse = new ArrayList<>();
     LocationManager locationManager;
+    Spinner spinnerPermits;
+    List<String> permitStrings = new ArrayList<>();
+    User currentUserRef;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private FirebaseUser currentUser = mAuth.getCurrentUser();
+    String currentUserPermit;
+    String userActualPermit;
+    private MyItemRecyclerViewAdapter adapterLots;
+
 
 
     public HomeFragment() {
@@ -103,8 +120,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Locati
 
 
 
-
-
     }
 
     @Override
@@ -126,8 +141,113 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Locati
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        final View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        spinnerPermits = view.findViewById(R.id.mapPermitSpinner);
+        //spinnerPermits = view.findViewById(R.id.mapPermitSpinner);
+
+
+        new FirebaseDatabaseHelper().readCurrentUser(currentUser.getUid(), new FirebaseDatabaseHelper.DataStatus_CurrentUser() {
+            @Override
+            public void DataIsLoaded(User user, String key) {
+
+                currentUserRef = user;
+
+                System.out.println();
+            }
+
+            @Override
+            public void DataIsInserted(User user) {
+
+            }
+
+            @Override
+            public void DataIsUpdated() {
+
+            }
+
+            @Override
+            public void DataIsDeleted() {
+
+            }
+        });
+
+        new FirebaseDatabaseHelper().readPermits(new FirebaseDatabaseHelper.DataStatus_Permits() {
+            @Override
+            public void DataIsLoaded(List<Permit> permits, List<String> keys) {
+                // permitsResponse = permits;
+
+
+                //List<String> permitStrings = new ArrayList<>();
+                for(int i=0; i<permits.size(); i++) {
+                    permitStrings.add(permits.get(i).permit_type);
+                }
+
+                Collections.sort(permitStrings);
+                permitStrings.add(0, "All");
+
+                ArrayAdapter<String> adapterPermits = new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_item, permitStrings);
+                adapterPermits.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+
+                int permitSelected = 0;
+                List<String> currentPermit = currentUserRef.getPermits();
+                currentUserPermit = currentPermit.get(0) != null && currentPermit.size() > 0 ? currentPermit.get(0) : "";
+                userActualPermit = currentPermit.get(0) != null && currentPermit.size() > 0 ? currentPermit.get(0) : "";
+
+                if(currentPermit != null && currentPermit.size() > 0) {     //should be size 1 always
+                    for(int i=0; i<permitStrings.size(); i++) {
+                        if(permitStrings.get(i).equals(currentPermit.get(0))) {
+                            permitSelected = i;
+                            break;
+                        }
+                    }
+                }
+
+                spinnerPermits.setAdapter(adapterPermits);
+                spinnerPermits.setSelection(permitSelected);
+
+//                filterRecyclerView(mGoogleMap, userActualPermit);
+            }
+
+            @Override
+            public void DataIsInserted() {
+
+            }
+
+            @Override
+            public void DataIsUpdated() {
+
+            }
+
+            @Override
+            public void DataIsDeleted() {
+
+            }
+        });
+
+        spinnerPermits.setOnItemSelectedListener(this);
+
+
+        Button filterButton = (Button) view.findViewById(R.id.filterButtonMap);
+        filterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                filterMap(mGoogleMap);
+            }
+        });
+
+        Button myLotButton = (Button) view.findViewById(R.id.clearButtonMap);
+        myLotButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getMyLots(mGoogleMap);
+            }
+        });
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return view; //inflater.inflate(R.layout.fragment_home, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -152,6 +272,22 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Locati
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String text = parent.getItemAtPosition(position).toString();
+
+        if(parent.getId() == R.id.mapPermitSpinner) {
+            currentUserPermit = text;
+
+            System.out.println("User Type Spinner selected item: " + text);
+        }  else { }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 
     /**
@@ -212,7 +348,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Locati
                             LatLng marker = new LatLng(latitude, longitude);
                             mGoogleMap.addMarker(new MarkerOptions().position(marker).title(lot_name).snippet("Available with " + permit_type + " pass"));
 
-                            markers.add(marker);
+                            markers.add(lots.get(i));
                         }
                         //lotsResponse = lots;
                     }
@@ -232,8 +368,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Locati
 
                     }
                 });
-
-
 
 
 
@@ -342,4 +476,60 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Locati
     }
 
     /////
+    public void filterMap(GoogleMap gMap) {
+        gMap.clear();
+
+        //currentUserPermit
+        for(int i=0; i<markers.size(); i++) {
+            Double latitude = markers.get(i).getLatitude();
+            Double longitude = markers.get(i).getLongitude();
+            String lot_name = markers.get(i).getLotName();
+            String lot_number = markers.get(i).getLotNumber();
+            String permit_type = markers.get(i).getPermitType();
+            String lot_time = markers.get(i).getTime();
+
+            if(permit_type.equals(currentUserPermit)) {
+                LatLng marker = new LatLng(latitude, longitude);
+                mGoogleMap.addMarker(new MarkerOptions().position(marker).title(lot_name).snippet("Available with " + permit_type + " pass"));
+            }
+        }
+    }
+
+    public void getMyLots(GoogleMap gMap) {
+
+        int permitSelected = 0;
+        List<String> currentPermit = currentUserRef.getPermits();
+        currentUserPermit = currentPermit.get(0) != null && currentPermit.size() > 0 ? currentPermit.get(0) : "";
+        userActualPermit = currentPermit.get(0) != null && currentPermit.size() > 0 ? currentPermit.get(0) : "";
+
+        if(currentPermit != null && currentPermit.size() > 0) {     //should be size 1 always
+            for(int i=0; i<permitStrings.size(); i++) {
+                if(permitStrings.get(i).equals(currentPermit.get(0))) {
+                    permitSelected = i;
+                    break;
+                }
+            }
+        }
+
+        spinnerPermits.setSelection(permitSelected);
+
+        /////////////////
+        gMap.clear();
+
+        //currentUserPermit
+        for(int i=0; i<markers.size(); i++) {
+            Double latitude = markers.get(i).getLatitude();
+            Double longitude = markers.get(i).getLongitude();
+            String lot_name = markers.get(i).getLotName();
+            String lot_number = markers.get(i).getLotNumber();
+            String permit_type = markers.get(i).getPermitType();
+            String lot_time = markers.get(i).getTime();
+
+            if(permit_type.equals(userActualPermit)) {
+                LatLng marker = new LatLng(latitude, longitude);
+                mGoogleMap.addMarker(new MarkerOptions().position(marker).title(lot_name).snippet("Available with " + permit_type + " pass"));
+            }
+        }
+    }
+
 }
