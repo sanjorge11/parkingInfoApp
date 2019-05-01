@@ -13,6 +13,7 @@
         android:layout_width="550px"
         android:textSize="60px"
         android:layout_height="50dp"
+        android:layout_gravity="center"
         android:textStyle="bold"
         android:gravity="center"/>
 
@@ -20,19 +21,30 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:orientation="vertical">
 
         <Button
             android:id="@+id/switchToSignIn"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent"
+            style="@style/Base.CardView"
+            android:layout_width="330dp"
+            android:layout_gravity="center"
+            android:background="@drawable/more_info_button"
             android:onClick="switchToLogin"
             android:text="Login" />
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="8dp" />
 
         <Button
             android:id="@+id/switchToRegister"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent"
+            style="@style/Base.CardView"
+            android:layout_width="330dp"
+            android:layout_gravity="center"
+            android:background="@drawable/more_info_button"
             android:onClick="switchToSignUp"
             android:text="Sign Up" />
 

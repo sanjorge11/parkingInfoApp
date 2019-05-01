@@ -8,6 +8,10 @@
     android:orientation="vertical"
     tools:context=".SignInActivity">
 
+    <Space
+        android:layout_width="10dp"
+        android:layout_height="8dp" />
+
     <EditText
         android:id="@+id/emailSignIn"
         android:layout_width="200dp"
@@ -23,9 +27,16 @@
     <Button
         android:id="@+id/signInButton"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
+        style="@style/Base.CardView"
+        android:layout_width="330dp"
+        android:layout_gravity="center"
+        android:background="@drawable/more_info_button"
+
         android:onClick="signInClicked"
         android:text="Login" />
+    <Space
+        android:layout_width="10dp"
+        android:layout_height="8dp" />
 
     <!--<Button-->
         <!--android:id="@+id/signUpButton"-->
@@ -37,13 +48,22 @@
     <Button
         android:id="@+id/forgotPasswordButton"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
+        style="@style/Base.CardView"
+        android:layout_width="330dp"
+        android:layout_gravity="center"
+        android:background="@drawable/more_info_button"
         android:text="Forgot Password" />
+    <Space
+        android:layout_width="10dp"
+        android:layout_height="8dp" />
 
     <Button
         android:id="@+id/backButton"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
+        style="@style/Base.CardView"
+        android:layout_width="330dp"
+        android:layout_gravity="center"
+        android:background="@drawable/more_info_button"
         android:onClick="backToWelcomePage"
         android:text="Back" />
 

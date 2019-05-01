@@ -60,14 +60,24 @@
     <Button
         android:id="@+id/registerButton"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
+        style="@style/Base.CardView"
+        android:layout_width="330dp"
+        android:layout_gravity="center"
+        android:background="@drawable/more_info_button"
         android:onClick="registerClicked"
         android:text="Register" />
+
+    <Space
+        android:layout_width="10dp"
+        android:layout_height="8dp" />
 
     <Button
         android:id="@+id/backButton"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
+        style="@style/Base.CardView"
+        android:layout_width="330dp"
+        android:layout_gravity="center"
+        android:background="@drawable/more_info_button"
         android:onClick="backToWelcomePage"
         android:text="Back" />
 
