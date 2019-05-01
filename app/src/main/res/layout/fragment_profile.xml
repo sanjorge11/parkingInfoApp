@@ -158,13 +158,24 @@
     <Button
         android:id="@+id/saveChangesButton"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
+        style="@style/Base.CardView"
+        android:layout_width="330dp"
+        android:layout_gravity="center"
+        android:background="@drawable/more_info_button"
         android:text="Save Changes" />
+
+    <Space
+        android:layout_width="10dp"
+        android:layout_height="8dp" />
+
 
     <Button
         android:id="@+id/signOutButton"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
+        style="@style/Base.CardView"
+        android:layout_width="330dp"
+        android:layout_gravity="center"
+        android:background="@drawable/more_info_button"
         android:onClick="signOutClicked"
         android:text="Sign Out" />
 
