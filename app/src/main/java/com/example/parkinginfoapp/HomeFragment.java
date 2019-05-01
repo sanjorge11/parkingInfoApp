@@ -57,8 +57,10 @@ import static android.support.constraint.Constraints.TAG;
  * to handle interaction events.
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
+ *
  */
-public class HomeFragment extends Fragment implements OnMapReadyCallback, LocationListener, AdapterView.OnItemSelectedListener {
+                                                                //, AdapterView.OnItemSelectedListener
+public class HomeFragment extends Fragment implements OnMapReadyCallback, LocationListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -72,22 +74,24 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Locati
 
     private OnFragmentInteractionListener mListener;
 
-//    private GoogleMap mMap;
-//    MapView mMapView;
     private GoogleMap mGoogleMap;
     MapView mMapView;
     private List<Lot> markers = new ArrayList<>();
     private List<Lot> lotsResponse = new ArrayList<>();
     LocationManager locationManager;
+    /*
     Spinner spinnerPermits;
     List<String> permitStrings = new ArrayList<>();
+    */
     User currentUserRef;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseUser currentUser = mAuth.getCurrentUser();
+
+    /*
     String currentUserPermit;
     String userActualPermit;
     private MyItemRecyclerViewAdapter adapterLots;
-
+*/
 
 
     public HomeFragment() {
@@ -128,8 +132,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Locati
 
         mMapView = (MapView) view.findViewById(R.id.map);
 
-//        System.out.println("This is the map fragment");
-//        System.out.println(mMapView);
 
         if(mMapView != null) {
             mMapView.onCreate(savedInstanceState);
@@ -144,10 +146,11 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Locati
 
         final View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        /*
         spinnerPermits = view.findViewById(R.id.mapPermitSpinner);
-        //spinnerPermits = view.findViewById(R.id.mapPermitSpinner);
+        */
 
-
+        /*
         new FirebaseDatabaseHelper().readCurrentUser(currentUser.getUid(), new FirebaseDatabaseHelper.DataStatus_CurrentUser() {
             @Override
             public void DataIsLoaded(User user, String key) {
@@ -171,15 +174,14 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Locati
             public void DataIsDeleted() {
 
             }
-        });
+        }); */
 
+        /*
         new FirebaseDatabaseHelper().readPermits(new FirebaseDatabaseHelper.DataStatus_Permits() {
             @Override
             public void DataIsLoaded(List<Permit> permits, List<String> keys) {
-                // permitsResponse = permits;
 
 
-                //List<String> permitStrings = new ArrayList<>();
                 for(int i=0; i<permits.size(); i++) {
                     permitStrings.add(permits.get(i).permit_type);
                 }
@@ -208,7 +210,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Locati
                 spinnerPermits.setAdapter(adapterPermits);
                 spinnerPermits.setSelection(permitSelected);
 
-//                filterRecyclerView(mGoogleMap, userActualPermit);
             }
 
             @Override
@@ -245,6 +246,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Locati
                 getMyLots(mGoogleMap);
             }
         });
+        */
 
         // Inflate the layout for this fragment
         return view; //inflater.inflate(R.layout.fragment_home, container, false);
@@ -274,6 +276,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Locati
         mListener = null;
     }
 
+    /*
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String text = parent.getItemAtPosition(position).toString();
@@ -289,6 +292,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Locati
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+    */
 
     /**
      * This interface must be implemented by activities that contain this
@@ -476,6 +480,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Locati
     }
 
     /////
+    /*
     public void filterMap(GoogleMap gMap) {
         gMap.clear();
 
@@ -530,6 +535,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, Locati
                 mGoogleMap.addMarker(new MarkerOptions().position(marker).title(lot_name).snippet("Available with " + permit_type + " pass"));
             }
         }
-    }
+    } */
 
 }

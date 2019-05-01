@@ -1,60 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="horizontal"
-        xmlns:android="http://schemas.android.com/apk/res/android">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textSize="@dimen/place_autocomplete_prediction_primary_text"
-            android:text="Filter Lots"/>
-        <Spinner
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:id="@+id/mapPermitSpinner">
-        </Spinner>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/filterButtonMap"
-            android:text="Filter"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/clearButtonMap"
-            android:text="My Permit"/>
-
-    </LinearLayout>
-
-
-
-    <com.google.android.gms.maps.MapView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/map"
-        />
-
-</LinearLayout>
-
-
-<!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:tools="http://schemas.android.com/tools"-->
-    <!--android:layout_width="match_parent"-->
+<!--<LinearLayout android:layout_width="match_parent"-->
     <!--android:layout_height="match_parent"-->
-    <!--android:name="com.google.android.gms.maps.SupportMapFragment"-->
-    <!--tools:context=".HomeFragment">-->
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--android:orientation="vertical"-->
+    <!--xmlns:android="http://schemas.android.com/apk/res/android">-->
+
+    <!--<LinearLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:orientation="horizontal"-->
+        <!--xmlns:android="http://schemas.android.com/apk/res/android">-->
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:textSize="@dimen/place_autocomplete_prediction_primary_text"-->
+            <!--android:text="Filter Lots"/>-->
+        <!--<Spinner-->
+            <!--android:layout_width="100dp"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:id="@+id/mapPermitSpinner">-->
+        <!--</Spinner>-->
+
+        <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:id="@+id/filterButtonMap"-->
+            <!--android:text="Filter"/>-->
+
+        <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:id="@+id/clearButtonMap"-->
+            <!--android:text="My Permit"/>-->
+
+    <!--</LinearLayout>-->
+
+
 
     <!--<com.google.android.gms.maps.MapView-->
         <!--android:layout_width="match_parent"-->
@@ -62,5 +46,21 @@
         <!--android:id="@+id/map"-->
         <!--/>-->
 
-<!--</FrameLayout>-->
+<!--</LinearLayout>-->
+
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:name="com.google.android.gms.maps.SupportMapFragment"
+    tools:context=".HomeFragment">
+
+    <com.google.android.gms.maps.MapView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/map"
+        />
+
+</FrameLayout>
 

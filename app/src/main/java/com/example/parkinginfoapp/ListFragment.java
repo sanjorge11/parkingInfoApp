@@ -57,7 +57,9 @@ import static android.support.constraint.Constraints.TAG;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class ListFragment extends Fragment implements LocationListener, AdapterView.OnItemSelectedListener {
+
+                                                        //, AdapterView.OnItemSelectedListener
+public class ListFragment extends Fragment implements LocationListener {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -70,10 +72,11 @@ public class ListFragment extends Fragment implements LocationListener, AdapterV
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseUser currentUser = mAuth.getCurrentUser();
     private MyItemRecyclerViewAdapter adapterLots;
-    //String currentUserType;
+
+    /*
     Spinner spinnerPermits;
     List<String> permitStrings = new ArrayList<>();
-
+*/
 
 
     LocationManager locationManager;
@@ -122,17 +125,6 @@ public class ListFragment extends Fragment implements LocationListener, AdapterV
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_item_list, container, false);
-        /*View viewItem = inflater.inflate(R.layout.fragment_item, container, false);
-
-
-
-        Button carIconButton = (Button) viewItem.findViewById(R.id.carIcon);
-        carIconButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println("Button pressed");
-            }
-        }); */
 
         final View listView = view.findViewById(R.id.list);
 
@@ -183,19 +175,7 @@ public class ListFragment extends Fragment implements LocationListener, AdapterV
 
         }
 
-//        FloatingActionButton fab = view.findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-////                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-////                        .setAction("Action", null).show();
-//                PopupMenu popup = new PopupMenu(this, fab);
-//                MenuInflater inflater = popup.getMenuInflater();
-//                inflater.inflate(R.menu.your_menu, popup.getMenu());
-//                popup.show();
-//            }
-//        });
-
+/*
         new FirebaseDatabaseHelper().readCurrentUser(currentUser.getUid(), new FirebaseDatabaseHelper.DataStatus_CurrentUser() {
             @Override
             public void DataIsLoaded(User user, String key) {
@@ -275,23 +255,15 @@ public class ListFragment extends Fragment implements LocationListener, AdapterV
         });
 
         spinnerPermits.setOnItemSelectedListener(this);
+        */
 
         /////////
+        /*
         Button filterButton = (Button) view.findViewById(R.id.filterButton);
         filterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 filterRecyclerView(adapterLots);
-//                Context context = listView.getContext();
-//                final RecyclerView recyclerView = (RecyclerView) listView;
-//                if (mColumnCount <= 1) {
-//                    recyclerView.setLayoutManager(new LinearLayoutManager(context));
-//                } else {
-//                    recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-//                }
-
-
-                //filterRecyclerView(recyclerView);
             }
         });
 
@@ -299,10 +271,9 @@ public class ListFragment extends Fragment implements LocationListener, AdapterV
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //System.out.println("Clear clicked");
                 getMyLots(adapterLots);
             }
-        });
+        }); */
 
 
         return view;
@@ -365,25 +336,6 @@ public class ListFragment extends Fragment implements LocationListener, AdapterV
         startActivity(mapIntent);
     }
 
-    /*public String getRequestURL(LatLng origin, LatLng dest) {
-        //Value of origin
-        String str_org = "origin=" + origin.latitude + "," + origin.longitude;
-
-        //Value of dest
-        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
-
-        //Mode for find direction
-        String mode = "mode=driving";
-
-        //Build full param
-        String param = str_org + "&" + str_dest + "&" + sensor + "&" + mode;
-
-        //output format
-        String output = "json";
-
-        //create url to request
-        String url =
-    } */
 
     @Override
     public void onAttach(Context context) {
@@ -402,6 +354,7 @@ public class ListFragment extends Fragment implements LocationListener, AdapterV
         mListener = null;
     }
 
+    /*
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String text = parent.getItemAtPosition(position).toString();
@@ -417,7 +370,7 @@ public class ListFragment extends Fragment implements LocationListener, AdapterV
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
-
+*/
 
 
     /**
@@ -498,7 +451,7 @@ public class ListFragment extends Fragment implements LocationListener, AdapterV
     }
 
     /////
-
+/*
     public void filterRecyclerView(MyItemRecyclerViewAdapter adapter) {
         adapter.getFilter().filter(currentUserPermit);
     }
@@ -523,4 +476,5 @@ public class ListFragment extends Fragment implements LocationListener, AdapterV
 
         adapter.getFilter().filter(userActualPermit);
     }
+    */
 }
